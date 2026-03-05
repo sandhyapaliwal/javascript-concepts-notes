@@ -1,4 +1,4 @@
-# var vs let vs const in JavaScript
+# difference between var, let and const in JavaScript
 
 ## 1. `var`
 
