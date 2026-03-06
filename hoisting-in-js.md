@@ -1,37 +1,36 @@
 # Hoisting in JavaScript
 
-## Hoisting kya hota hai?
+## What is Hoisting?
 
-JavaScript mein **Hoisting** ek default behavior hai jisme variable aur function declarations
-ko code execute hone se pehle **upar (top)** le jaaya jaata hai.
+Hoisting is JavaScript's default behavior of moving variable and function
+**declarations to the top** of their scope before the code executes.
 
-Simple words mein:
-> Variable ya function use karo **declare karne se pehle bhi** — JS kuch cases mein error nahi deta!
+In simple words:
+> You can use a variable or function **before declaring it** — and in some cases JS won't throw an error!
 
 ---
 
 ## 1. var — Hoisted with `undefined`
 
 ```javascript
-console.log(name); // undefined — error nahi aaya!
+console.log(name); // undefined — no error!
 var name = "Sandhya";
 console.log(name); // "Sandhya"
 ```
 
-**Kya hua andar se:**
+**What JS does internally:**
 ```javascript
-// JS ne yeh kiya internally:
-var name;           // declaration upar aa gayi — hoisted!
+var name;           // declaration moved to top — hoisted!
 console.log(name);  // undefined
-name = "Sandhya";   // assignment yahan hi raha
+name = "Sandhya";   // assignment stays here
 console.log(name);  // "Sandhya"
 ```
 
-⚠️ `var` hoist hota hai — but value `undefined` hoti hai pehle
+⚠️ `var` is hoisted — but its value is `undefined` until the assignment line is reached.
 
 ---
 
-## 2. let aur const — Hoisted but NOT accessible (TDZ)
+## 2. let and const — Hoisted but NOT accessible (TDZ)
 
 ```javascript
 console.log(age); // ❌ ReferenceError: Cannot access 'age' before initialization
@@ -43,27 +42,27 @@ console.log(PI); // ❌ ReferenceError: Cannot access 'PI' before initialization
 const PI = 3.14;
 ```
 
-**Temporal Dead Zone (TDZ) kya hai?**
+**What is the Temporal Dead Zone (TDZ)?**
 
-> `let` aur `const` bhi hoist hote hain — lekin ek **"dead zone"** mein rehte hain
-> jab tak unki declaration line tak code nahi pahunchta.
-> Is zone mein access karo toh **ReferenceError** milta hai.
+> `let` and `const` are hoisted — but they live in a **"dead zone"**
+> until the code reaches their declaration line.
+> Accessing them in this zone throws a **ReferenceError**.
 
 ```javascript
-// TDZ start — let city hoist hua but accessible nahi
-console.log(city); // ❌ ReferenceError — TDZ mein hai
+// TDZ starts here — city is hoisted but not accessible
+console.log(city); // ❌ ReferenceError — inside TDZ
 
-let city = "Dehradun"; // TDZ khatam — ab accessible hai
+let city = "Dehradun"; // TDZ ends — now accessible
 
 console.log(city); // ✅ "Dehradun"
 ```
 
 ---
 
-## 3. Functions — Fully Hoisted ✅
+## 3. Function Declarations — Fully Hoisted ✅
 
 ```javascript
-// Function call karo PEHLE declaration se
+// Call the function BEFORE its declaration
 greet(); // ✅ "Hello Sandhya!" — works perfectly!
 
 function greet() {
@@ -71,24 +70,23 @@ function greet() {
 }
 ```
 
-**Kya hua andar se:**
+**What JS does internally:**
 ```javascript
-// JS ne yeh kiya internally:
-function greet() {       // poori function upar aa gayi!
+// Entire function moved to top
+function greet() {
     console.log("Hello Sandhya!");
 }
 
 greet(); // ✅ works!
 ```
 
-> Function declarations **fully hoisted** hoti hain — declaration aur definition dono!
+> Function declarations are **fully hoisted** — both the declaration and the definition!
 
 ---
 
-## 4. Function Expression — NOT Hoisted
+## 4. Function Expressions — NOT Fully Hoisted
 
 ```javascript
-// var se bani function expression
 sayHello(); // ❌ TypeError: sayHello is not a function
 
 var sayHello = function() {
@@ -96,10 +94,9 @@ var sayHello = function() {
 };
 ```
 
-**Kyun?**
+**What JS does internally:**
 ```javascript
-// JS ne yeh kiya internally:
-var sayHello;      // sirf var hoist hua — undefined
+var sayHello;      // only var is hoisted — value is undefined
 sayHello();        // ❌ undefined is not a function!
 sayHello = function() {
     console.log("Hello!");
@@ -108,17 +105,17 @@ sayHello = function() {
 
 ---
 
-## 5. Real World Example — Hoisting Bug
+## 5. Real World Bug Caused by Hoisting
 
 ```javascript
-// ⚠️ Var ki wajah se unexpected bug
+// ⚠️ var causes unexpected bug
 for (var i = 0; i < 3; i++) {
     setTimeout(function() {
-        console.log(i); // 3, 3, 3 — expected tha 0, 1, 2 !
+        console.log(i); // 3, 3, 3 — expected 0, 1, 2!
     }, 1000);
 }
 
-// ✅ let se fix ho jaata hai
+// ✅ let fixes it
 for (let i = 0; i < 3; i++) {
     setTimeout(function() {
         console.log(i); // 0, 1, 2 — correct!
@@ -135,21 +132,21 @@ for (let i = 0; i < 3; i++) {
 | `var` | ✅ Yes | `undefined` | ✅ Yes (but undefined) |
 | `let` | ✅ Yes | TDZ | ❌ No — ReferenceError |
 | `const` | ✅ Yes | TDZ | ❌ No — ReferenceError |
-| `function` | ✅ Yes | Full function | ✅ Yes |
-| `function expression (var)` | ⚠️ Partial | `undefined` | ❌ No — TypeError |
+| `function` declaration | ✅ Yes | Full function | ✅ Yes |
+| `function` expression (var) | ⚠️ Partial | `undefined` | ❌ No — TypeError |
 
 ---
 
-## 💡 Key Takeaways
+## Key Takeaways
 
-1. `var` hoist hota hai — value `undefined` hoti hai pehle
-2. `let` aur `const` hoist hote hain — but **TDZ** ki wajah se access nahi kar sakte
-3. **Function declarations** fully hoist hoti hain — pehle call kar sakte ho
-4. **Function expressions** fully hoist nahi hoti
-5. Isliye hamesha variables ko **upar declare karo** — confusion avoid hoga ✅
+1. `var` is hoisted — but its value is `undefined` until assigned
+2. `let` and `const` are hoisted — but **TDZ** prevents access before declaration
+3. **Function declarations** are fully hoisted — you can call them before declaring
+4. **Function expressions** are NOT fully hoisted
+5. Always declare variables at the **top of their scope** to avoid confusion ✅
 
 ---
 
 > 💡 **Golden Rule:**
 > Declare first, use later — always!
-> `let` aur `const` use karo `var` ki jagah — TDZ aapko bugs se bachata hai! ✅
+> Use `let` and `const` instead of `var` — TDZ protects you from hoisting bugs! ✅
