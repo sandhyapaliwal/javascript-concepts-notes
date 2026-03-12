@@ -1,10 +1,3 @@
-/**
- * closures.js
- * 
- * This file demonstrates the concept of Closures in JavaScript.
- * You can upload this file directly to GitHub as a learning reference.
- */
-
 /*
 ------------------------------------------------------------
 1. BASIC CLOSURE
