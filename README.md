@@ -1,4 +1,3 @@
-# javascript-concepts-notes
 # JavaScript Concepts Notes
 
 This repository contains my structured notes and practical examples while learning and revising core JavaScript concepts.  
