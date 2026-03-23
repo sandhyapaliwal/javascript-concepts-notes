@@ -434,8 +434,3 @@ const module = await import("./file");
 7. Modules keep code **organized, reusable, and maintainable** ✅
 
 ---
-
-> 💡 **Golden Rule:**
-> One component per file — default export.
-> Utility functions and constants — named exports.
-> Use barrel files (index.js) to simplify imports across your project!
