@@ -410,7 +410,3 @@ const App = () => {
 
 ---
 
-> 💡 **Golden Rule:**
-> Sending data → JSON.stringify() → converts to string
-> Receiving data → JSON.parse() → converts to object
-> Always use try/catch with JSON.parse — never trust external data!
