@@ -144,27 +144,3 @@ correctObj.greet(); // Output: Sandhya
 
 console.log(this);
 
-/*
-Browser mein:
-👉 window object
-
-Node.js mein:
-👉 empty object {}
-*/
-
-
-/*
-===========================================
-INTERVIEW QUICK POINTS 🚀
-===========================================
-
-1. "this" depends on function call, not where it is written
-2. Object method → "this" = object
-3. Arrow function → no own "this"
-4. Normal function → has its own "this"
-5. "this" can change dynamically
-
-===========================================
-END
-===========================================
-*/
