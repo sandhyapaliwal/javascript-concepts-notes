@@ -1,303 +1,281 @@
-# Spread and Rest Operator in JavaScript
+# Memory Management & Garbage Collection in JavaScript
 
-## What are Spread and Rest Operators?
+---
 
-Both use the same syntax — **three dots `...`** — but they do opposite things
-depending on where they are used.
+## What is Memory Management?
+
+Memory management is how JavaScript:
+
+* Allocates memory
+* Uses memory
+* Frees memory automatically
+
+JavaScript handles all of this **behind the scenes**, so developers don’t need to manually manage memory like in C/C++.
+
+---
+
+## Memory Lifecycle
+
+Every piece of data in JavaScript goes through three stages:
 
 ```
-Spread  → expands  an array/object into individual elements
-Rest    → collects individual elements into an array/object
+1. Allocation   → Memory is created
+2. Usage        → Values are read or modified
+3. Deallocation → Memory is cleaned up automatically
 ```
 
 ---
 
-## SPREAD OPERATOR
+## 1. Memory Allocation
 
-## 1. Spread with Arrays
+Memory is assigned when variables or objects are declared.
 
 ```javascript
-const arr1 = [1, 2, 3];
-const arr2 = [4, 5, 6];
+// Primitive → stored in Stack
+let count = 10;
 
-// Merge two arrays
-const merged = [...arr1, ...arr2];
-console.log(merged); // [1, 2, 3, 4, 5, 6]
-
-// Add elements while merging
-const combined = [0, ...arr1, ...arr2, 7];
-console.log(combined); // [0, 1, 2, 3, 4, 5, 6, 7]
-
-// Copy an array — no reference sharing
-const original = [1, 2, 3];
-const copy = [...original];
-copy.push(4);
-console.log(original); // [1, 2, 3] — not affected ✅
-console.log(copy);     // [1, 2, 3, 4]
-
-// Without spread — reference copy (both affected!)
-const badCopy = original;
-badCopy.push(99);
-console.log(original); // [1, 2, 3, 99] — original changed! ❌
-
-// Spread string into characters
-const str = "Sandhya";
-const chars = [...str];
-console.log(chars); // ["S", "a", "n", "d", "h", "y", "a"]
+// Object → stored in Heap
+let user = { name: "Sandhya", role: "Developer" };
 ```
 
 ---
 
-## 2. Spread with Objects
+## 2. Memory Usage
+
+Using the allocated memory.
 
 ```javascript
-const user = { name: "Sandhya", age: 22 };
-const address = { city: "Dehradun", state: "Uttarakhand" };
-
-// Merge two objects
-const fullProfile = { ...user, ...address };
-console.log(fullProfile);
-// { name: "Sandhya", age: 22, city: "Dehradun", state: "Uttarakhand" }
-
-// Copy an object
-const original = { name: "Sandhya", age: 22 };
-const copy = { ...original };
-copy.age = 25;
-console.log(original.age); // 22 — not affected ✅
-console.log(copy.age);     // 25
-
-// Add or override properties
-const updated = { ...user, age: 23, role: "Developer" };
-console.log(updated);
-// { name: "Sandhya", age: 23, role: "Developer" }
-
-// ⚠️ Later properties override earlier ones
-const obj1 = { a: 1, b: 2 };
-const obj2 = { b: 99, c: 3 };
-const result = { ...obj1, ...obj2 };
-console.log(result); // { a: 1, b: 99, c: 3 } — b is overridden by obj2
+console.log(user.name);   // Access
+user.role = "Engineer";   // Modify
 ```
 
 ---
 
-## 3. Spread with Function Calls
+## 3. Memory Deallocation
+
+JavaScript automatically removes unused memory using:
+
+👉 **Garbage Collection**
+
+---
+
+## What is Garbage Collection?
+
+Garbage Collection is the process of:
+
+```
+Automatically removing unused (unreachable) memory
+```
+
+You don’t need to manually delete variables — JavaScript does it for you.
+
+---
+
+## Reachability (Core Concept)
+
+An object is **reachable** if:
+
+* It can be accessed from the global scope
+* Or it is referenced by another reachable object
+
+👉 If something is NOT reachable → it becomes **garbage**
+
+---
+
+## Example — Garbage Collection
 
 ```javascript
-const numbers = [5, 2, 8, 1, 9, 3];
+let user = { name: "Sandhya" };
 
-// Pass array elements as individual arguments
-console.log(Math.max(...numbers)); // 9
-console.log(Math.min(...numbers)); // 1
+// Remove reference
+user = null;
+```
 
-// Without spread
-console.log(Math.max(numbers)); // NaN — doesn't work with array ❌
+✔ The object is now unreachable
+✔ It will be removed from memory automatically
 
-// Sum function
-function add(a, b, c) {
-    return a + b + c;
+---
+
+## Mark-and-Sweep Algorithm
+
+JavaScript engines use this internally.
+
+### Step 1: Mark
+
+* Start from root (global scope)
+* Mark all reachable objects
+
+### Step 2: Sweep
+
+* Remove all unmarked (unreachable) objects
+
+---
+
+## Circular Reference Example
+
+```javascript
+let obj1 = {};
+let obj2 = {};
+
+obj1.ref = obj2;
+obj2.ref = obj1;
+
+// Remove both references
+obj1 = null;
+obj2 = null;
+```
+
+✔ Even though they reference each other
+✔ They are unreachable from root
+✔ So they are garbage collected
+
+---
+
+## Stack vs Heap Memory
+
+```javascript
+let a = 10;                // Stack
+let obj = { name: "JS" };  // Heap
+```
+
+| Memory Type | Stores                           |
+| ----------- | -------------------------------- |
+| Stack       | Primitive values, function calls |
+| Heap        | Objects, arrays, functions       |
+
+---
+
+## Memory Leaks (Important)
+
+A **memory leak** happens when:
+
+```
+Memory is not released even when it's no longer needed
+```
+
+This can cause:
+
+* Slow performance
+* High memory usage
+* App crashes
+
+---
+
+## Common Causes of Memory Leaks
+
+### 1. Global Variables
+
+```javascript
+var data = "I stay in memory forever";
+```
+
+❌ Global variables are rarely garbage collected
+
+---
+
+### 2. Unused Timers
+
+```javascript
+setInterval(() => {
+  console.log("Running...");
+}, 1000);
+```
+
+❌ Runs forever if not cleared
+
+---
+
+### 3. Closures Holding References
+
+```javascript
+function outer() {
+  let largeData = new Array(1000000).fill("data");
+
+  return function inner() {
+    console.log("Using data");
+  };
+}
+```
+
+❌ `largeData` stays in memory due to closure
+
+---
+
+### 4. Detached DOM Elements
+
+```javascript
+let el = document.getElementById("box");
+document.body.removeChild(el);
+```
+
+❌ If still referenced → cannot be garbage collected
+
+---
+
+## How to Avoid Memory Leaks
+
+```javascript
+// Remove references
+user = null;
+
+// Clear timers
+clearInterval(timerId);
+
+// Remove event listeners
+element.removeEventListener("click", handler);
+```
+
+### Best Practices:
+
+* Avoid unnecessary global variables
+* Clean up timers and listeners
+* Be careful with closures
+
+---
+
+## Example — Proper Cleanup
+
+```javascript
+let timer = setInterval(() => {
+  console.log("Running...");
+}, 1000);
+
+// Stop after 5 seconds
+setTimeout(() => {
+  clearInterval(timer);
+}, 5000);
+```
+
+✔ Prevents unnecessary memory usage
+
+---
+
+## Garbage Collection in Action
+
+```javascript
+function createUser() {
+  let user = { name: "Sandhya" };
+  return user;
 }
 
-const args = [10, 20, 30];
-console.log(add(...args)); // 60 ✅
+let u = createUser();
+
+// Remove reference
+u = null;
 ```
 
----
-
-## 4. Spread in React — Most Common Uses
-
-```javascript
-import { useState } from "react";
-
-const App = () => {
-    const [user, setUser] = useState({
-        name: "Sandhya",
-        age: 22,
-        city: "Dehradun"
-    });
-
-    // Update one property without losing others
-    const updateAge = () => {
-        setUser({ ...user, age: 23 }); // spread existing + override age ✅
-    };
-
-    // ❌ Wrong — replaces entire object
-    const wrongUpdate = () => {
-        setUser({ age: 23 }); // name and city are lost!
-    };
-
-    // Spread array state
-    const [skills, setSkills] = useState(["React", "JavaScript"]);
-
-    const addSkill = (newSkill) => {
-        setSkills([...skills, newSkill]); // add without mutating ✅
-    };
-
-    // Pass all props to a component
-    const buttonProps = {
-        className: "btn",
-        type: "submit",
-        disabled: false
-    };
-
-    return <button {...buttonProps}>Submit</button>; // spread as props ✅
-};
-```
-
----
-
-## REST OPERATOR
-
-## 5. Rest in Function Parameters
-
-```javascript
-// Collect all arguments into an array
-function sum(...numbers) {
-    return numbers.reduce((total, n) => total + n, 0);
-}
-
-console.log(sum(1, 2, 3));          // 6
-console.log(sum(1, 2, 3, 4, 5));    // 15
-console.log(sum(10, 20));           // 30
-
-// Mix regular params with rest
-function introduce(firstName, lastName, ...hobbies) {
-    console.log(`Name: ${firstName} ${lastName}`);
-    console.log(`Hobbies: ${hobbies.join(", ")}`);
-}
-
-introduce("Sandhya", "Paliwal", "Coding", "Reading", "Music");
-// Name: Sandhya Paliwal
-// Hobbies: Coding, Reading, Music
-
-// ⚠️ Rest must always be the LAST parameter
-function wrong(...args, last) {} // ❌ SyntaxError
-function correct(first, ...rest) {} // ✅
-```
-
----
-
-## 6. Rest in Array Destructuring
-
-```javascript
-const numbers = [1, 2, 3, 4, 5];
-
-// Collect remaining elements
-const [first, second, ...remaining] = numbers;
-console.log(first);     // 1
-console.log(second);    // 2
-console.log(remaining); // [3, 4, 5]
-
-// Skip and collect
-const [head, , ...tail] = numbers;
-console.log(head); // 1
-console.log(tail); // [3, 4, 5]
-
-// Real use — separate first item from rest
-const [latest, ...older] = [
-    "March 2026",
-    "February 2026",
-    "January 2026"
-];
-console.log(latest); // "March 2026"
-console.log(older);  // ["February 2026", "January 2026"]
-```
-
----
-
-## 7. Rest in Object Destructuring
-
-```javascript
-const user = {
-    name: "Sandhya",
-    age: 22,
-    city: "Dehradun",
-    role: "Developer",
-    github: "sandhyapaliwal"
-};
-
-// Extract specific properties — collect the rest
-const { name, age, ...otherDetails } = user;
-console.log(name);         // "Sandhya"
-console.log(age);          // 22
-console.log(otherDetails); // { city: "Dehradun", role: "Developer", github: "sandhyapaliwal" }
-
-// Useful for separating concerns
-const { id, createdAt, updatedAt, ...displayData } = apiResponse;
-// id, createdAt, updatedAt used internally
-// displayData shown to user
-```
-
----
-
-## 8. Rest in React — Common Patterns
-
-```javascript
-// Pass known props + spread unknown ones
-const Button = ({ label, onClick, ...rest }) => {
-    // label and onClick are used explicitly
-    // ...rest contains className, disabled, type, style etc.
-    return (
-        <button onClick={onClick} {...rest}>
-            {label}
-        </button>
-    );
-};
-
-// Usage
-<Button
-    label="Submit"
-    onClick={handleSubmit}
-    className="btn-primary"
-    disabled={isLoading}
-    type="submit"
-/>
-```
-
----
-
-## Spread vs Rest — Side by Side
-
-```javascript
-// SPREAD — expand into individual elements
-const arr = [1, 2, 3];
-console.log(...arr);          // 1 2 3 — expanded
-Math.max(...arr);             // spread into function args
-const copy = [...arr];        // spread into new array
-const obj = { ...user };      // spread into new object
-
-// REST — collect into array/object
-function fn(...args) {}       // rest in function params
-const [a, ...rest] = arr;     // rest in array destructuring
-const { x, ...others } = obj; // rest in object destructuring
-```
-
----
-
-## Quick Comparison Table
-
-| Feature | Spread `...` | Rest `...` |
-|---|---|---|
-| Purpose | Expands elements | Collects elements |
-| Used in | Function calls, arrays, objects | Function params, destructuring |
-| Input | Array / Object | Multiple values |
-| Output | Individual elements | Array / Object |
-| React use | State updates, props | Component props, params |
+✔ Object becomes unreachable
+✔ Automatically removed from memory
 
 ---
 
 ## Key Takeaways
 
-1. **Spread** expands — **Rest** collects. Same syntax, opposite purpose ✅
-2. Spread creates a **shallow copy** — nested objects are still referenced
-3. In React — always use spread to **update state** without mutating ✅
-4. Rest must always be the **last parameter** in a function
-5. Rest in destructuring collects all **remaining** elements
-6. Spread with objects — later properties **override** earlier ones
-7. Use spread to pass an **array as function arguments** — `Math.max(...arr)`
+* JavaScript handles memory automatically
+* Garbage Collector removes unused objects
+* Reachability decides what stays in memory
+* Stack stores primitives, Heap stores objects
+* Memory leaks can impact performance
 
 ---
 
-> 💡 **Golden Rule:**
-> Spread = breaking apart (expanding)
-> Rest = gathering together (collecting)
-> In React — spread is your best friend for immutable state updates!
