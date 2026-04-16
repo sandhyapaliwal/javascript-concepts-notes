@@ -614,8 +614,6 @@ console.log("Main code");
 
 > Even with `0` delay, the callback waits for the Call Stack to empty.
 
----
-
 ### Microtask Queue (High Priority)
 
 Stores high-priority async tasks: **Promise callbacks**, `queueMicrotask`, `MutationObserver`.
@@ -728,15 +726,3 @@ async function test() {
 - ✅ Order: Sync → Microtasks → Macrotasks → Render
 
 ---
-
-## 📚 Resources
-
-- [MDN — Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
-- [Axios Documentation](https://axios-http.com/docs/intro)
-- [Loupe — Visualize the Event Loop](http://latentflip.com/loupe/)
-- [MDN — Event Loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop)
-- Practice examples in **browser DevTools console**
-
----
-
-*Happy Coding! 🚀*
