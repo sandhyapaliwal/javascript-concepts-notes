@@ -582,26 +582,6 @@ for (let i = 0; i < arr.length; i++) {
 }
 ```
 
----
-
-## 🚨 Common Interview Questions
-
-### Q1: What's the difference between for and for...of?
-👉 `for` uses index, `for...of` gets values directly.
-
-### Q2: When to use while vs do...while?
-👉 `while` checks condition first, `do...while` runs at least once.
-
-### Q3: Difference between break and continue?
-👉 `break` exits loop, `continue` skips current iteration.
-
-### Q4: Can you use for...in on arrays?
-👉 Yes, but it's not recommended. Use `for` or `for...of` instead.
-
-### Q5: How to create nested loops?
-👉 Put one loop inside another.
-
----
 
 ## 🧩 Key Takeaways
 
@@ -627,8 +607,3 @@ for (let i = 0; i < arr.length; i++) {
 - [ ] Use array methods (map, filter) when appropriate
 - [ ] Profile performance for large loops
 
----
-
-**Happy Coding! 🚀**
-
-Master loops and you'll be able to solve most programming problems efficiently!
