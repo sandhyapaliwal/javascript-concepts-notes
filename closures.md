@@ -430,30 +430,6 @@ outer();
 
 ---
 
-## 🚨 Common Interview Questions
-
-### Q1: What is a closure?
-👉 A function that has access to variables from its outer scope, even after the outer function has finished executing.
-
-### Q2: How do closures work?
-👉 When a function is created, it maintains a reference to its outer scope. Even after the outer function returns, the inner function can still access those variables.
-
-### Q3: What's the problem with var in loops?
-👉 `var` is function-scoped, so all callbacks share the same variable. By the time the callback runs, the loop is done and the variable has its final value.
-
-### Q4: How to fix the var loop problem?
-👉 Use `let` (block-scoped), use IIFE, or use `const` in arrow functions.
-
-### Q5: What are practical uses of closures?
-👉 Data encapsulation, private variables, function factories, decorators, event handlers, and callbacks.
-
-### Q6: Can closures cause memory leaks?
-👉 Yes, if a closure holds references to large objects that are no longer needed, the memory won't be freed until the closure is garbage collected.
-
-### Q7: What's the difference between closure and scope?
-👉 Scope is the set of variables accessible in a context. Closure is a function that "remembers" variables from its scope.
-
----
 
 ## 🧩 Key Takeaways
 
@@ -481,6 +457,3 @@ outer();
 
 ---
 
-**Happy Coding! 🚀**
-
-Closures are fundamental to JavaScript. Master them and you'll be a much better JavaScript developer!
