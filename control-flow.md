@@ -494,27 +494,7 @@ try {
 
 ---
 
-## 🚨 Common Interview Questions
 
-### Q1: What is control flow?
-👉 The order in which statements are executed in a program.
-
-### Q2: Difference between while and do...while?
-👉 `while` checks condition first, `do...while` executes at least once then checks.
-
-### Q3: When to use for, for...of, for...in?
-👉 `for` for known iterations, `for...of` for array values, `for...in` for object keys.
-
-### Q4: What's the difference between break and continue?
-👉 `break` exits the loop, `continue` skips current iteration.
-
-### Q5: What does finally do?
-👉 Runs regardless of whether try or catch blocks execute.
-
-### Q6: Can you use break in if statement?
-👉 No, `break` only works in loops and switch statements.
-
----
 
 ## 🧩 Key Takeaways
 
@@ -542,6 +522,4 @@ try {
 
 ---
 
-**Happy Coding! 🚀**
 
-Master control flow and your code will be clean, efficient, and easy to understand!
