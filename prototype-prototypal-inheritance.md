@@ -414,32 +414,6 @@ dog.bark();  // "Buddy is barking"
 
 ---
 
-## 🚨 Common Interview Questions
-
-### Q1: What is a prototype?
-👉 An object from which other objects inherit properties and methods.
-
-### Q2: Explain the prototype chain?
-👉 When accessing a property, JavaScript searches: object → prototype → prototype's prototype → ... → null
-
-### Q3: What is prototypal inheritance?
-👉 Objects can inherit from other objects through the prototype chain.
-
-### Q4: What does `new` do?
-👉 Creates empty object, sets prototype, calls constructor, returns object.
-
-### Q5: Difference between `__proto__` and `prototype`?
-👉 `__proto__` is property of all objects, `prototype` is property of constructor functions.
-
-### Q6: How to create inheritance?
-👉 Use `Object.create()` or constructor functions with `new`.
-
-### Q7: What is method overriding?
-👉 Child object provides its own version of a parent method.
-
-### Q8: Should you modify built-in prototypes?
-👉 No, it's a bad practice and can cause conflicts.
-
 ---
 
 ## 🧩 Key Takeaways
@@ -466,8 +440,3 @@ dog.bark();  // "Buddy is barking"
 - [ ] Understand `constructor` property
 - [ ] Know difference between instance and prototype properties
 
----
-
-**Happy Coding! 🚀**
-
-Remember: Prototypal inheritance is at the heart of JavaScript. Understanding it deeply will make you a better developer!
