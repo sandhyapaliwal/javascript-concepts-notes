@@ -751,6 +751,3 @@ console.log("4");
 
 ---
 
-**Happy Coding! 🚀**
-
-Master both API calling and the Event Loop for strong JavaScript fundamentals!
