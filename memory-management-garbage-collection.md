@@ -439,30 +439,7 @@ u = null;
 
 ---
 
-## 🚨 Common Interview Questions
 
-### Q1: What is memory management?
-👉 The process of allocating, using, and freeing memory. JavaScript does this automatically using garbage collection.
-
-### Q2: What is garbage collection?
-👉 Automatic process of removing unreachable (unused) objects from memory.
-
-### Q3: How does Mark-and-Sweep work?
-👉 **Mark phase**: Start from root and mark all reachable objects. **Sweep phase**: Delete unmarked objects.
-
-### Q4: What is a memory leak?
-👉 Memory that is not released even when it's no longer needed, causing performance issues.
-
-### Q5: How to avoid memory leaks?
-👉 Remove references, clean up timers, remove event listeners, and break circular references.
-
-### Q6: Difference between Stack and Heap?
-👉 **Stack**: Fast, limited size, stores primitives. **Heap**: Slower, larger size, stores objects.
-
-### Q7: What is reachability?
-👉 An object is reachable if it can be accessed from the global scope or referenced by another reachable object.
-
----
 
 ## 🧩 Key Takeaways
 
@@ -490,6 +467,3 @@ u = null;
 
 ---
 
-**Happy Coding! 🚀**
-
-Remember: Good memory management is key to performant applications, especially in long-running applications like SPAs and Node.js servers.
