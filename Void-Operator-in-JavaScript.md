@@ -230,11 +230,5 @@ if (value === undefined) { }
 
 ---
 
-## Quick Tips
 
-✅ Modern JavaScript में void operator rarely use hota hai  
-✅ Legacy code mein `javascript:void(0)` dekh sakte ho  
-✅ Arrow functions में accidentally return prevent karne ke liye use ho sakta hai  
-✅ Most cases में `undefined` directly use karo  
-✅ Interview preparation के liye samajhna zaroori hai  
 
