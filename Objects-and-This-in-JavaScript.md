@@ -142,10 +142,3 @@ console.log(this); // Browser mein: Window object
 
 ---
 
-## Quick Tips
-
-✅ Object methods ke liye regular functions use karo
-✅ `this` hamesha jis object se call ho raha hai usi ko refer karta hai
-✅ Arrow functions ke sath `this` problematic ho sakta hai
-✅ `this` binding ko samajhna JavaScript ke liye bohot zaroori hai
-
